@@ -4,6 +4,9 @@ import Card from '../Card/Card';
 
 function Main({onCardClick, onCardLike, onCardDelete, cards}) {
 
+    const [isHide, setHide] = React.useState(false);
+    
+
     return (
         <main className="content">
             <section className="filter">
