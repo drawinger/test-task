@@ -2,24 +2,29 @@ import React from 'react';
 import './Main.css';
 import Card from '../Card/Card';
 
-function Main({onCardClick, onCardLike, onCardDelete, cards}) {
+function Main({onFilterClick, onCardClick, onCardLike, onCardDelete, cards}) {
 
     const [isHide, setHide] = React.useState(false);
-    
 
+    function test(){
+        setHide(()=> isHide === false ? true : false)
+    }
+
+    const hideButton = `filter__button ${isHide? 'filter__button_hide' : 'filter__button'}`;
+    
     return (
         <main className="content">
             <section className="filter">
                 <h2 className="filter__title">あなたの好きなアニメを選択してください</h2>
                 <button
                     type="button" aria-label="фитровать фото"
-                    className="filter__button"
-                    // onClick={handleLike}
+                    className={hideButton}
+                    onClick={test}
                 ></button>
             </section>  
 
 
-            <section className="elements">
+            <section className='elements'>
                 <ul className="elements__table">
                     {cards.map((film) => (
                         
@@ -29,16 +34,12 @@ function Main({onCardClick, onCardLike, onCardDelete, cards}) {
                                 onCardClick={onCardClick}
                                 onCardLike={onCardLike}
                                 onCardDelete={onCardDelete}
+                                filtred = {isHide}
                             />
                         )
                     )}
-
-              
                 </ul>
-
             </section>
-      
-
         </main>
     );
 }

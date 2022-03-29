@@ -14,6 +14,7 @@ function App() {
   // eslint-disable-next-line
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  const [isLiked, setLike] = React.useState(false);
   const [cardDelete, setCardDelete] = React.useState({});
   const [removePopupButtonText, setRemovePopupButtonText] = React.useState('Да');  
 
@@ -67,8 +68,6 @@ function App() {
       .then(([cards]) => {
      
         setCards(cards)
-        console.log(cards)
-        localStorage.setItem("key", cards[0])
       })
       .catch((err) => {
         console.log(err);
@@ -76,11 +75,13 @@ function App() {
 
   }, [])
 
-  function handleCardLike(card) {
-      
-    card.likes = { id: card.id, status: false }
-    const isLiked = card.likes.id === card.id ? true : false;
-    card.likes = { id: card.id, status: isLiked }  
+  function handleCardLike(film) {
+
+  }
+
+
+  function handleFilterClick(){
+ 
   }
     
   function handleCardDelete(card) {
@@ -101,6 +102,7 @@ function App() {
         onCardClick={handleCardClick}
         onCardLike={handleCardLike}
         onCardDelete={handleCardDeleteClick}
+        onFilterClick={handleFilterClick}
         cards={cards}
         />
       <Footer/>

@@ -1,12 +1,12 @@
 import React from 'react';
 import './Card.css';
 
-function Card({ film, onCardClick, onCardLike, onCardDelete }) {
+function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
 
     const [isLiked, setLike] = React.useState(false);
     
-    const likes = [{id:'', status: ''}];
-    film.likes = likes;
+    // const likes = {status: false};
+    // film.likes = likes;
 
     function handleClick() {
         onCardClick(film);
@@ -14,23 +14,26 @@ function Card({ film, onCardClick, onCardLike, onCardDelete }) {
      
     function handleLike() {
         onCardLike(film);
-        setLike(() => isLiked === false ? true :  false);
-        film.likes.status = isLiked
+        setLike(() => isLiked == false ? true :  false);
     }
-    
-    
+
+    React.useEffect(() => {
+        film.likes = isLiked
+      });
 
     const cardLikeButtonClassName = `element__emotion ${isLiked ? 'element__emotion_active' : 'element__emotion'}`;
-
-  
+    const hideElement = `element ${(filtred && isLiked)? 'element__hide' : 'element'}`;
 
     function handleDeleteClick() {
         onCardDelete(film);
     }
 
+
+    
+
     return (
 
-        <li className="element">
+        <li className={hideElement}>
         
             <img 
                 src={film.image}

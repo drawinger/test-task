@@ -40,11 +40,17 @@
     transition: .4s;
 }
 
+.filter__button_hide {
+    background-image: url("/src/images/filter_hide.svg");
+    background-color: #FFFFFF;
+}
+
 .elements {
     max-width: 880px;
     margin: 50px auto 0;
     box-sizing: border-box;
 }
+
 
 .elements__table {
     margin: 0;
