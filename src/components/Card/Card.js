@@ -8,6 +8,10 @@ function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
     // const likes = {status: false};
     // film.likes = likes;
 
+    const duration = +film.running_time;
+    // фильмы более ста минут будут отфильтрованы
+    const durationForFiltering = 100;
+
     function handleClick() {
         onCardClick(film);
     }
@@ -22,7 +26,8 @@ function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
       });
 
     const cardLikeButtonClassName = `element__emotion ${isLiked ? 'element__emotion_active' : 'element__emotion'}`;
-    const hideElement = `element ${(filtred && !isLiked)? 'element__hide' : 'element'}`;
+    const hideElementforLike = `element ${(filtred && !isLiked)? 'element__hide' : 'element'}`;
+    const hideElementforDur = `element ${(filtred && !(duration < durationForFiltering))? 'element__hide' : 'element'}`;
 
     function handleDeleteClick() {
         onCardDelete(film);
@@ -30,7 +35,8 @@ function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
 
     return (
 
-        <li className={hideElement}>
+        <li className={hideElementforDur}>
+        {/* <li className={hideElementforLike}> */}
         
             <img 
                 src={film.image}
@@ -48,7 +54,8 @@ function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
             <div className="element__description">
                 <div className="elemnt__content">
                     <h2 className="element__title">{film.title}</h2>
-                    <h3 className="element__subtitle">{film.original_title}</h3>
+                    <h3 className="element__subtitle">{film.original_title + ' '+duration}</h3>
+                    <h3 className="element__subtitle">{}</h3>
                 </div>
                 <div className="element__rate">
                     <button

@@ -18,6 +18,7 @@ function App() {
   const [cardDelete, setCardDelete] = React.useState({});
   const [removePopupButtonText, setRemovePopupButtonText] = React.useState('Да');  
 
+
   function handleCardClick(film) {
     setSelectedCard(film);
   }
@@ -66,7 +67,6 @@ function App() {
   React.useEffect(() => {
     Promise.all([api.getInitialCards()])
       .then(([cards]) => {
-     
         setCards(cards)
       })
       .catch((err) => {
@@ -92,6 +92,8 @@ function App() {
     closeAllPopups();
     setRemovePopupButtonText('Да');
   }
+
+
 
   
   return (
