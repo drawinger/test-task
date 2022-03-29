@@ -22,14 +22,11 @@ function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
       });
 
     const cardLikeButtonClassName = `element__emotion ${isLiked ? 'element__emotion_active' : 'element__emotion'}`;
-    const hideElement = `element ${(filtred && isLiked)? 'element__hide' : 'element'}`;
+    const hideElement = `element ${(filtred && !isLiked)? 'element__hide' : 'element'}`;
 
     function handleDeleteClick() {
         onCardDelete(film);
     }
-
-
-    
 
     return (
 
