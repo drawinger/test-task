@@ -23,7 +23,7 @@ function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
 
     React.useEffect(() => {
         film.likes = isLiked
-      });
+      },);
 
     const cardLikeButtonClassName = `element__emotion ${isLiked ? 'element__emotion_active' : 'element__emotion'}`;
     const hideElementforLike = `element ${(filtred && !isLiked)? 'element__hide' : 'element'}`;

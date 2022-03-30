@@ -14,6 +14,7 @@ function App() {
   // eslint-disable-next-line
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  const [cardsAmount, setCardsAmount] = React.useState(1)
   const [isLiked, setLike] = React.useState(false);
   const [cardDelete, setCardDelete] = React.useState({});
   const [removePopupButtonText, setRemovePopupButtonText] = React.useState('Да');  
@@ -62,18 +63,43 @@ function App() {
 
   },[]);
 
-  
-  
   React.useEffect(() => {
     Promise.all([api.getInitialCards()])
       .then(([cards]) => {
-        setCards(cards)
+        console.log('вытаскиваю карточки')
+        console.log(cards.length)
+        setCards(cards.slice(0,cardsAmount))
+
       })
       .catch((err) => {
         console.log(err);
       })
 
-  }, [])
+  }, [cardsAmount])
+
+  function modifyCardsAmount(){
+    console.log('я вызываюсь')
+    setCardsAmount(()=> cardsAmount+5)
+
+    // // console.log(cards.lenght)
+    // // const newCards = cards.slice(cardsAmount,cardsAmount*2)
+    // // // console.log(newCards)
+    // // return newCards
+    
+    // // const newCards = cards.slice(0,cardsMaxQuanity);
+    // // console.log(newCards)
+    // const newCards = [];
+    // var counter = 0;
+    // for (var card of cards) {
+    //     if (counter < cardsAmount) {
+    //       newCards.push(card)
+    //     }
+    //     counter++
+    //     setCardsAmount(()=> cardsAmount+cardsAmount)
+    // }
+    // console.log(newCards)
+    // setCards(()=>newCards)
+  }
 
   function handleCardLike(film) {
 
@@ -81,7 +107,7 @@ function App() {
 
 
   function handleFilterClick(){
- 
+    
   }
     
   function handleCardDelete(card) {
@@ -105,6 +131,7 @@ function App() {
         onCardLike={handleCardLike}
         onCardDelete={handleCardDeleteClick}
         onFilterClick={handleFilterClick}
+        cardsAmount={modifyCardsAmount}
         cards={cards}
         />
       <Footer/>
