@@ -1,11 +1,10 @@
 import React from 'react';
-import './Main.css';
+import './Likes.css';
 import Card from '../Card/Card';
 
-
-
-function Main({onFilterClick, onCardClick, onCardLike, onCardDelete, cardsAmount, cards, postsToRender, showMorePosts}) {
-    console.log('MAIN')
+function Likes({onFilterClick, onCardClick, onCardLike, onCardDelete, cardsAmount, cards}) {
+    console.log('LIKES')
+    // console.log(cards)
     const [isHide, setHide] = React.useState(false);
    
     // const cardsMaxQuanity = 10;
@@ -17,20 +16,20 @@ function Main({onFilterClick, onCardClick, onCardLike, onCardDelete, cardsAmount
     //     console.log(card)
     // }
     
-    // console.log(cards)
+
 
     function test(){
-        setHide(()=> isHide === false ? true : false)
-        console.log('loading more')
+        // setHide(()=> isHide === false ? true : false)
+        // console.log('loading more')
+        console.log(cards)
     }
 
     function test2(){
-        cardsAmount()
+        // console.log(cards)
     }
-    
+   
 
     const hideButton = `filter__button ${isHide? 'filter__button_hide' : 'filter__button'}`;
-    const loadButton = `load__button ${cards.length == 30? 'load__button_hide' : 'load__button'}`;
     
     return (
         <main className="content">
@@ -42,10 +41,15 @@ function Main({onFilterClick, onCardClick, onCardLike, onCardDelete, cardsAmount
                     onClick={test}
                 ></button>
             </section>  
+            
+            <section className="filter">
+                <h2 className="filter__title">FFFFFFFFFFFFF</h2>
+
+            </section> 
 
             <section className='elements'>
                 <ul className="elements__table">
-                    {cards.map((film) => (
+                     {cards.map((film) => (
                             <Card
                                 key={film.id}
                                 film={film}
@@ -55,19 +59,12 @@ function Main({onFilterClick, onCardClick, onCardLike, onCardDelete, cardsAmount
                                 filtred = {isHide}
                             />
                         )
-                    )}
+                    )} 
                 </ul>
             </section>
 
-            <section className='load'>
-                <button
-                    type="button" aria-label="показать еще"
-                    className={loadButton}
-                    onClick={showMorePosts}
-                >LAOD MORE</button>
-            </section>
         </main>
     );
 }
 
-export default Main;
+export default Likes;

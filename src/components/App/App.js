@@ -2,10 +2,14 @@ import './App.css';
 import React from 'react';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
+import Likes from '../Likes/Likes';
 import Footer from '../Footer/Footer';
 import ImagePopup from '../Popup/ImagePopup';
 import api from '../../utils/Api';
 import DeleteCardPopup from '../Popup/DeleteCardPopup';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+const postsPerPage = 3;
+let arrayForHoldingPosts = [];
 
 function App() {
 
@@ -14,10 +18,13 @@ function App() {
   // eslint-disable-next-line
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
-  const [cardsAmount, setCardsAmount] = React.useState(1)
+  const [cardsAmount, setCardsAmount] = React.useState(5)
   const [isLiked, setLike] = React.useState(false);
   const [cardDelete, setCardDelete] = React.useState({});
   const [removePopupButtonText, setRemovePopupButtonText] = React.useState('Да');  
+  const [postsToShow, setPostsToShow] = React.useState([]);
+  const [next, setNext] = React.useState(3);
+
 
 
   function handleCardClick(film) {
@@ -66,10 +73,7 @@ function App() {
   React.useEffect(() => {
     Promise.all([api.getInitialCards()])
       .then(([cards]) => {
-        console.log('вытаскиваю карточки')
-        console.log(cards.length)
         setCards(cards.slice(0,cardsAmount))
-
       })
       .catch((err) => {
         console.log(err);
@@ -77,33 +81,37 @@ function App() {
 
   }, [cardsAmount])
 
+  // localStorage.clear();
+
+  const loopWithSlice = (start, end) => {
+    const slicedPosts = cards.slice(start, end);
+    arrayForHoldingPosts = [...arrayForHoldingPosts, ...slicedPosts];
+    setPostsToShow(arrayForHoldingPosts);
+  };
+
+  console.log('postsToShow ', postsToShow)
+  console.log('next ', next)
+
+  React.useEffect(() => {
+    loopWithSlice(0, postsPerPage);
+  }, []);
+
+  const handleShowMorePosts = () => {
+    loopWithSlice(next, next + postsPerPage);
+    setNext(next + postsPerPage);
+  };
+  console.log('postsPerPage ', postsPerPage)
+
+
   function modifyCardsAmount(){
     console.log('я вызываюсь')
     setCardsAmount(()=> cardsAmount+5)
-
-    // // console.log(cards.lenght)
-    // // const newCards = cards.slice(cardsAmount,cardsAmount*2)
-    // // // console.log(newCards)
-    // // return newCards
-    
-    // // const newCards = cards.slice(0,cardsMaxQuanity);
-    // // console.log(newCards)
-    // const newCards = [];
-    // var counter = 0;
-    // for (var card of cards) {
-    //     if (counter < cardsAmount) {
-    //       newCards.push(card)
-    //     }
-    //     counter++
-    //     setCardsAmount(()=> cardsAmount+cardsAmount)
-    // }
-    // console.log(newCards)
-    // setCards(()=>newCards)
   }
 
   function handleCardLike(film) {
 
   }
+
 
 
   function handleFilterClick(){
@@ -113,7 +121,7 @@ function App() {
   function handleCardDelete(card) {
     setRemovePopupButtonText('Удаление...')
     const newCards = cards.filter((evt) => evt.id !== card.id);
-    setCards(newCards);
+    setCards(newCards.slice(0,cardsAmount))
     localStorage.removeItem(card);
     closeAllPopups();
     setRemovePopupButtonText('Да');
@@ -123,33 +131,53 @@ function App() {
 
   
   return (
-    <div className="page">
-     
-      <Header/>
-      <Main
-        onCardClick={handleCardClick}
-        onCardLike={handleCardLike}
-        onCardDelete={handleCardDeleteClick}
-        onFilterClick={handleFilterClick}
-        cardsAmount={modifyCardsAmount}
-        cards={cards}
-        />
-      <Footer/>
+    <div className="page">   z
 
-      <DeleteCardPopup
-        isOpen={isDeleteCardPopup}
-        onClose={closeAllPopups}
-        onSubmitDeleteCard={handleCardDelete}
-        film={cardDelete}
-        buttonSubmitText={removePopupButtonText}
-      />
+    <BrowserRouter>
+  
+    <Header/>
+      <Routes>
+      
+        <Route path="/" element={  
+            <Main
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDeleteClick}
+              onFilterClick={handleFilterClick}
+              cardsAmount={modifyCardsAmount}
+              postsToRender= {postsToShow}
+              showMorePosts = {handleShowMorePosts}
+              cards={cards}
+              /> } />
+        <Route path="likes/*" element={
+            <Likes
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDeleteClick}
+              onFilterClick={handleFilterClick}
+              cardsAmount={modifyCardsAmount}
+              cards={cards}
+              />
+              } />
+      </Routes>
+    </BrowserRouter>
 
-      <ImagePopup
-        film={selectedCard}
-        onClose={closeAllPopups}
-      />
+  <Footer/>
 
+  <DeleteCardPopup
+    isOpen={isDeleteCardPopup}
+    onClose={closeAllPopups}
+    onSubmitDeleteCard={handleCardDelete}
+    film={cardDelete}
+    buttonSubmitText={removePopupButtonText}
+  />
+
+  <ImagePopup
+    film={selectedCard}
+    onClose={closeAllPopups}
+  />
     </div>
+
   );
 }
 

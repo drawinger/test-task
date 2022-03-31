@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link, useLocation } from "react-router-dom";
 import './Card.css';
 
-function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
-
+function Card({ film, onCardClick, onCardLike, onCardDelete, filtred , likeStatus}) {
+    const location = useLocation();
+    const isLocationLikes = location.pathname === "/likes";
     const [isLiked, setLike] = React.useState(false);
-    
+    const currLikeStatus = isLiked;
+    console.log('CARDS')
     // const likes = {status: false};
     // film.likes = likes;
 
@@ -15,18 +18,37 @@ function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
     function handleClick() {
         onCardClick(film);
     }
-     
+
     function handleLike() {
         onCardLike(film);
         setLike(() => isLiked == false ? true :  false);
+
+        if (!film.likes){
+            localStorage.setItem('likedFilm', JSON.stringify(film));
+          } else{
+            localStorage.removeItem('likedFilm');
+          }
+    }
+
+    function handleDisLike() {
+        onCardLike(film);
+        setLike(() => isLiked == true ? false :  true);
+        console.log('DISLIKE')
     }
 
     React.useEffect(() => {
-        film.likes = isLiked
-      },);
+        film.likes = currLikeStatus
+
+        var cat = localStorage.getItem('likedFilm');
+        // console.log(film.likes, ' ', JSON.parse(cat))
+      },[isLiked]);
 
     const cardLikeButtonClassName = `element__emotion ${isLiked ? 'element__emotion_active' : 'element__emotion'}`;
-    const hideElementforLike = `element ${(filtred && !isLiked)? 'element__hide' : 'element'}`;
+    const cardDisLikeButtonClassName = `element__dislike ${isLiked ? 'element__dislike_active' : 'element__dislike'}`;
+
+    const hideElementforLike = `element ${(isLocationLikes && isLiked)? 'element__hide' : 'element'}`;
+    const removeElementforLike = `element ${(isLocationLikes && isLiked)? 'element__hide' : 'element'}`;
+
     const hideElementforDur = `element ${(filtred && !(duration < durationForFiltering))? 'element__hide' : 'element'}`;
 
     function handleDeleteClick() {
@@ -35,8 +57,8 @@ function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
 
     return (
 
-        <li className={hideElementforDur}>
-        {/* <li className={hideElementforLike}> */}
+        // <li className={hideElementforDur}>
+         <li className={hideElementforLike}> 
         
             <img 
                 src={film.image}
@@ -57,6 +79,17 @@ function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
                     <h3 className="element__subtitle">{film.original_title + ' '+duration}</h3>
                     <h3 className="element__subtitle">{}</h3>
                 </div>
+                {isLocationLikes && (
+                    <div className="element__rate">
+                        <button
+                            type="button" aria-label="оценить фото"
+                            className={cardDisLikeButtonClassName}
+                            onClick={handleDisLike}
+                        ></button>
+                    </div>
+                )}
+
+                {!isLocationLikes && (
                 <div className="element__rate">
                     <button
                         type="button" aria-label="оценить фото"
@@ -64,6 +97,7 @@ function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
                         onClick={handleLike}
                     ></button>
                 </div>
+                )}
                 
             </div>
         </li>
