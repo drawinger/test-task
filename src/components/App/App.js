@@ -17,8 +17,6 @@ function App() {
 
 
 
-  
-
   const [isDeleteCardPopup, onDeleteCardPopup] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({image: '', title: ''});
   // eslint-disable-next-line
@@ -123,16 +121,7 @@ function App() {
     
   }
     
-  function handleCardDelete(card) {
-    setRemovePopupButtonText('Удаление...')
-    const newCards = cards.filter((evt) => evt.id !== card.id);
-    // setCards(newCards.slice(0,cardsAmount))
-    setCards(newCards)
-
-    localStorage.removeItem(card);
-    closeAllPopups();
-    setRemovePopupButtonText('Да');
-  }
+ 
 
   const [postsToShow, setPostsToShow] = React.useState([]);
   const [next, setNext] = React.useState(3);
@@ -151,6 +140,18 @@ function App() {
     loopWithSlice(next, next + postsPerPage);
     setNext(next + postsPerPage);
   };
+
+
+  function handleCardDelete(card) {
+    setRemovePopupButtonText('Удаление...')
+    const newpostsToShow = postsToShow.filter((evt) => evt.id !== card.id);
+    // setCards(newCards.slice(0,cardsAmount))
+    setPostsToShow(newpostsToShow)
+
+    localStorage.removeItem(card);
+    closeAllPopups();
+    setRemovePopupButtonText('Да');
+  }
 
 
 
