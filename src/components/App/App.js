@@ -6,16 +6,12 @@ import Footer from '../Footer/Footer';
 import ImagePopup from '../Popup/ImagePopup';
 import api from '../../utils/Api';
 import DeleteCardPopup from '../Popup/DeleteCardPopup';
-<<<<<<< Updated upstream
-=======
 import posts from './postsArray';
-import Posts from "../Posts/Posts";
 
 
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 const postsPerPage = 3;
 let arrayForHoldingPosts = [];
->>>>>>> Stashed changes
 
 function App() {
 
@@ -28,17 +24,11 @@ function App() {
   // eslint-disable-next-line
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
-<<<<<<< Updated upstream
-  const [isLiked, setLike] = React.useState(false);
-  const [cardDelete, setCardDelete] = React.useState({});
-  const [removePopupButtonText, setRemovePopupButtonText] = React.useState('Да');  
-=======
   const [cardsAmount, setCardsAmount] = React.useState(1)
   const [isLiked, setLike] = React.useState(false);
   const [cardDelete, setCardDelete] = React.useState({});
   const [removePopupButtonText, setRemovePopupButtonText] = React.useState('Да');  
 
->>>>>>> Stashed changes
 
   function handleCardClick(film) {
     setSelectedCard(film);
@@ -82,21 +72,6 @@ function App() {
   //     document.removeEventListener('keyup', handleEscapeClick);
   //   }
 
-<<<<<<< Updated upstream
-  
-  
-  React.useEffect(() => {
-    Promise.all([api.getInitialCards()])
-      .then(([cards]) => {
-     
-        setCards(cards)
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-
-  }, [])
-=======
   // },[]);
 
   // React.useEffect(() => {
@@ -138,68 +113,27 @@ function App() {
     console.log('я вызываюсь')
     setCardsAmount(()=> cardsAmount+5)
   }
->>>>>>> Stashed changes
 
   function handleCardLike(film) {
     console.log(film.likes)
   }
 
 
-<<<<<<< Updated upstream
-  function handleFilterClick(){
- 
-=======
   function handleFilterClick() {
     
->>>>>>> Stashed changes
   }
     
   function handleCardDelete(card) {
     setRemovePopupButtonText('Удаление...')
     const newCards = cards.filter((evt) => evt.id !== card.id);
-<<<<<<< Updated upstream
-    setCards(newCards);
-=======
     // setCards(newCards.slice(0,cardsAmount))
     setCards(newCards)
 
->>>>>>> Stashed changes
     localStorage.removeItem(card);
     closeAllPopups();
     setRemovePopupButtonText('Да');
   }
 
-<<<<<<< Updated upstream
-  
-  return (
-    <div className="page">
-     
-      <Header/>
-      <Main
-        onCardClick={handleCardClick}
-        onCardLike={handleCardLike}
-        onCardDelete={handleCardDeleteClick}
-        onFilterClick={handleFilterClick}
-        cards={cards}
-        />
-      <Footer/>
-
-      <DeleteCardPopup
-        isOpen={isDeleteCardPopup}
-        onClose={closeAllPopups}
-        onSubmitDeleteCard={handleCardDelete}
-        film={cardDelete}
-        buttonSubmitText={removePopupButtonText}
-      />
-
-      <ImagePopup
-        film={selectedCard}
-        onClose={closeAllPopups}
-      />
-
-    </div>
-  );
-=======
   const [postsToShow, setPostsToShow] = React.useState([]);
   const [next, setNext] = React.useState(3);
 
@@ -236,7 +170,7 @@ return (
   <Header/>
     <Routes>
     
-    {<Route path="/" element={  
+    <Route path="/" element={  
           <Main
             onCardClick={handleCardClick}
             onCardLike={handleCardLike}
@@ -245,7 +179,7 @@ return (
             cards={postsToShow}
             /> 
             } />
-      /* <Route path="likes/*" element={
+       {/* <Route path="likes/*" element={
           <Likes
             onCardClick={handleCardClick}
             onCardLike={handleCardLike}
@@ -254,7 +188,7 @@ return (
             cardsAmount={modifyCardsAmount}
             cards={cards}
             />
-            } /> */}
+            } />  */}
     </Routes>
   </BrowserRouter>
 
@@ -275,7 +209,6 @@ return (
     
   </div>
 );
->>>>>>> Stashed changes
 }
 
 
