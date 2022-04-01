@@ -51,7 +51,11 @@ function Card({ film, onCardClick, onCardLike, onCardDelete, filtred }) {
             <div className="element__description">
                 <div className="elemnt__content">
                     <h2 className="element__title">{film.title}</h2>
+<<<<<<< Updated upstream
                     <h3 className="element__subtitle">{film.original_title}</h3>
+=======
+                    <h3 className="element__subtitle">{film.original_title + ' '+duration}</h3>
+>>>>>>> Stashed changes
                 </div>
                 <div className="element__rate">
                     <button
