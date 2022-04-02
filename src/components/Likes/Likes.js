@@ -2,21 +2,11 @@ import React from 'react';
 import './Likes.css';
 import Card from '../Card/Card';
 
-function Likes({onFilterClick, onCardClick, onCardLike, onCardDelete, cardsAmount, cards}) {
+function Likes({handleShowMorePosts, onCardClick, onCardLike, onCardDelete, cards}) {
     console.log('LIKES')
-    // console.log(cards)
+
     const [isHide, setHide] = React.useState(false);
-   
-    // const cardsMaxQuanity = 10;
-
-    // const newCards = cards.slice(0,cardsMaxQuanity);
-    // console.log(newCards)
-
-    // for (var card of cards) {
-    //     console.log(card)
-    // }
-    
-
+    // const [newCards, setCards] = React.useState([]);
 
     function test(){
         // setHide(()=> isHide === false ? true : false)
@@ -24,8 +14,20 @@ function Likes({onFilterClick, onCardClick, onCardLike, onCardDelete, cardsAmoun
         console.log(cards)
     }
 
+    function isLiked(card) {
+        if (card.likes === true){
+            return card
+        }
+    }
+    
+    const newCards = cards.filter((card)=>card.likes === true );
+    console.log(newCards)
+
+
     function test2(){
-        // console.log(cards)
+        // setCards(cards.map((card)=>card.likes === true ? card : []))
+        // // console.log(cards)
+        console.log(newCards)
     }
    
 
@@ -47,19 +49,30 @@ function Likes({onFilterClick, onCardClick, onCardLike, onCardDelete, cardsAmoun
 
             </section> 
 
+            
+            <section className='load'>
+                <button
+                    type="button" aria-label="показать еще"
+                    className={hideButton}
+                    onClick={test2}
+                >LAOD MORE</button>
+            </section>
+
             <section className='elements'>
                 <ul className="elements__table">
-                     {cards.map((film) => (
+                    {newCards.map((film, index) => (
+                        
                             <Card
-                                key={film.id}
+                                key={index}
                                 film={film}
                                 onCardClick={onCardClick}
                                 onCardLike={onCardLike}
                                 onCardDelete={onCardDelete}
+                                handleShowMorePosts = {handleShowMorePosts}
                                 filtred = {isHide}
                             />
-                        )
-                    )} 
+                            )
+                        )}
                 </ul>
             </section>
 

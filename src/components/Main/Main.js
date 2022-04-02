@@ -3,7 +3,8 @@ import './Main.css';
 import Card from '../Card/Card';
 
 function Main({handleShowMorePosts, onCardClick, onCardLike, onCardDelete, cards}) {
-
+    console.log('MAIN')
+    
     const [isHide, setHide] = React.useState(false);
 
     function test(){

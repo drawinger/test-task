@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
+import Likes from '../Likes/Likes';
 import Footer from '../Footer/Footer';
 import ImagePopup from '../Popup/ImagePopup';
 import api from '../../utils/Api';
@@ -14,7 +15,7 @@ const postsPerPage = 3;
 let arrayForHoldingPosts = [];
 
 function App() {
-
+console.log('APP')
 
 
   const [isDeleteCardPopup, onDeleteCardPopup] = React.useState(false);
@@ -127,18 +128,22 @@ function App() {
   const [next, setNext] = React.useState(3);
 
   const loopWithSlice = (start, end) => {
+    posts.map((post) => post.likes = false)
     const slicedPosts = posts.slice(start, end);
     arrayForHoldingPosts = [...arrayForHoldingPosts, ...slicedPosts];
     setPostsToShow(arrayForHoldingPosts);
+    console.log('1')
   };
 
   React.useEffect(() => {
     loopWithSlice(0, postsPerPage);
+    console.log('2')
   }, []);
 
   const handleShowMorePosts = () => {
     loopWithSlice(next, next + postsPerPage);
     setNext(next + postsPerPage);
+    console.log('3')
   };
 
 
@@ -180,16 +185,15 @@ return (
             cards={postsToShow}
             /> 
             } />
-       {/* <Route path="likes/*" element={
+        <Route path="likes/*" element={
           <Likes
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDeleteClick}
-            onFilterClick={handleFilterClick}
-            cardsAmount={modifyCardsAmount}
-            cards={cards}
+          onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDeleteClick}
+          handleShowMorePosts = {handleShowMorePosts}
+          cards={postsToShow}
             />
-            } />  */}
+            } />  
     </Routes>
   </BrowserRouter>
 

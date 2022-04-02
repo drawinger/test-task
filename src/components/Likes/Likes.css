@@ -1,0 +1,124 @@
+.element {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    max-width: 282px;
+    max-height: 361px;
+    min-height: 361px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box; 
+}
+
+.element__hide{
+    display:none;
+}
+
+.element__image {
+    width: 282px;
+    height: 282px;
+    border-radius: 10px 10px 0 0;
+    margin: 0;
+    display: block;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.element__image:hover {
+    opacity: 0.5;
+}
+
+.element__remove {
+    background-image: url("/src/images/remove_btn.svg");
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, .0);
+    border: none;
+    cursor: pointer;
+    background-size: 100% 100%;
+    max-width: 18px;
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    transition: .4s;
+}
+
+.element__remove:hover {
+    opacity: 0.6;
+}
+
+.element__description {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    max-width: 246px;
+    padding: 18px 15px 16px 21px;
+}
+
+.elemnt__content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    max-width: 180px;
+    width: 100%;
+}
+
+.element__title {
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 29px;
+    padding: 0;
+    margin: 0 0 3px;
+    color: #000000;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.element__subtitle {
+    margin: 0;
+    padding: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+}
+
+.element__rate {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    max-width: 22px;
+    width: 100%;
+}
+
+.element__emotion {
+    max-width: 22px;
+    width: 100%;
+    height: 19px;
+    margin: 0;
+    background-image: url("/src/images/heart.svg");
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+    transition: 2s;
+    background-size: 100% 100%;
+}
+
+.element__emotion:hover {
+    opacity: 0.5;
+}
+
+.element__emotion_active {
+    opacity: 1;
+    background-image: url("/src/images/heart_active.svg");
+}
